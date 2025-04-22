@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { useKanban } from "../context/KanbanContext"; // Make sure this is the correct import path
+import { useKanban } from "../context/KanbanContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const { newColumnName } = useKanban(); // Accessing columns from KanbanContext
+  const { columns } = useKanban();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -54,8 +54,7 @@ function Header() {
                   className="absolute top-10 left-0 w-48 bg-white shadow-lg rounded-lg p-2 space-y-1 border z-50"
                   onMouseLeave={() => setShowDropdown(false)}
                 >
-                  {/* Dynamically rendering the columns from KanbanContext */}
-                  {Object.entries(newColumnName).map(([colId, col]) => (
+                  {Object.entries(columns).map(([colId, col]) => (
                     <li
                       key={colId}
                       className="px-3 py-2 hover:bg-yellow-50 rounded-md cursor-pointer text-sm font-medium"
@@ -87,7 +86,7 @@ function Header() {
       {screenWidth >= 768 && (
         <ul className="flex gap-6">
           <Link to='/home'>
-            <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Home</li>
+          <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Home</li>
           </Link>
           
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">About</li>
@@ -99,11 +98,16 @@ function Header() {
       {screenWidth >= 640 && (
         <div className="flex gap-3">
           <button className="px-4 py-2 rounded-lg bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition hover:cursor-pointer"
-          onClick={()=>{ navigate('/login') }}>
+          onClick={()=>{
+            navigate('/login')
+          }}
+          >
             Login
           </button>
           <button className="px-4 py-2 rounded-lg bg-orange-500 text-white font-medium hover:bg-orange-600 transition hover:cursor-pointer"
-          onClick={()=>{ navigate('/signup') }}>
+          onClick={()=>{
+            navigate('/signup')
+          }}>
             Sign Up
           </button>
         </div>
@@ -125,7 +129,6 @@ function Header() {
               Workspace
               {showDropdown && (
                 <ul className="mt-2 bg-white border rounded-lg shadow p-2 space-y-1 z-50">
-                  {/* Dynamically rendering the columns from KanbanContext */}
                   {Object.entries(columns).map(([colId, col]) => (
                     <li
                       key={colId}
@@ -142,11 +145,15 @@ function Header() {
             <li className="font-medium text-base hover:text-yellow-700">Create</li>
             <div className="flex flex-col gap-2 mt-4">
               <button className="px-4 py-2 rounded-lg bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition hover:cursor-pointer"
-              onClick={()=>{ navigate('/login') }}>
+              onClick={()=>{
+                navigate('/login')
+              }}>
                 Login
               </button>
               <button className="px-4 py-2 rounded-lg bg-orange-500 text-white font-medium hover:bg-orange-600 transition hover:cursor-pointer"
-              onClick={()=>{ navigate('/signup') }}>
+              onClick={()=>{
+                navigate('/signup')
+              }}>
                 Sign Up
               </button>
             </div>
