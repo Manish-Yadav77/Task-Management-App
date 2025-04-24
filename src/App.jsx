@@ -1,30 +1,31 @@
+// App.jsx
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { KanbanProvider } from "./context/KanbanContext";
-import KanbanBoard from "./components/KanbanBoard";
+import BoardsPage from "./pages/BoardsPage";
+import BoardDetailPage from "./pages/BoardDetailPage";
+import { BoardProvider } from "./context/BoardContext";
+import ErrorBoundary from "./pages/ErrorBoundary";
+import LandingPage from "./components/LandingPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SingleKanban from "./components/SingleKanban";
-import LandingPage from "./components/LandingPage";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
 
-function App() {
+const App = () => {
   return (
-    <KanbanProvider>
+    <ErrorBoundary>
+
+    <BoardProvider>
       <Router>
-        <Header />
+        <Header/>
         <Routes>
-          {/* Main Kanban Board */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/home" element={<KanbanBoard />} />
-          <Route path="/singlekanban/:id" element={<SingleKanban />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/Signup" element={<SignUp />}/>
+          <Route path="/home" element={<BoardsPage />} />
+          <Route path="/board/:boardId" element={<BoardDetailPage />} />
         </Routes>
-        <Footer />
+        <Footer/>
       </Router>
-    </KanbanProvider>
+    </BoardProvider>
+    </ErrorBoundary>
   );
-}
+};
 
 export default App;

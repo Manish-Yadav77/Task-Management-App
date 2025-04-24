@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => (
-  <>
+function Login() {
+
+  const Navigate = useNavigate();
+  return (
     <section className="flex items-center justify-center min-h-[88vh] bg-gradient-to-r from-yellow-100 to-orange-200">
       <div className="bg-white shadow-lg rounded-lg px-8 py-10 w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Log in to Task Manager</h2>
@@ -26,18 +29,21 @@ const Login = () => (
           </div>
           <button
             type="submit"
+            onClick={()=>{
+              Navigate('/home')
+            }}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition"
           >
             Log in
           </button>
           <div className="flex justify-between items-center mt-3">
-            <a href="#" className="text-blue-600 text-sm hover:underline">Forgot password?</a>
-            <a href="/signup" className="text-sm text-gray-500 hover:underline">Sign up instead</a>
+            <Link to="/forgotPassword" className="text-blue-600 text-sm hover:underline">Forgot password?</Link>
+            <Link to="/signup" className="text-sm text-gray-500 hover:underline">Sign up instead</Link>
           </div>
         </form>
       </div>
     </section>
-  </>
-);
+  )
+}
 
-export default Login;
+export default Login

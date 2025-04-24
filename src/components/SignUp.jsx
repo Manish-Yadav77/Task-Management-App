@@ -1,7 +1,11 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const SignUp = () => (
-  <>
+function SignUp() {
+
+  const Navigate = useNavigate();
+
+  return (
     <section className="flex items-center justify-center min-h-[88vh] bg-gradient-to-r from-yellow-100 to-orange-200">
       <div className="bg-white shadow-lg rounded-lg px-8 py-10 w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Sign up for your account</h2>
@@ -34,6 +38,9 @@ const SignUp = () => (
             />
           </div>
           <button
+          onClick={()=>{
+            Navigate('/login')
+          }}
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition"
           >
@@ -41,12 +48,12 @@ const SignUp = () => (
           </button>
           <div className="flex justify-between items-center mt-3">
             <span className="text-gray-500 text-sm">Already have an account?</span>
-            <a href="/login" className="text-sm text-blue-600 hover:underline">Log in</a>
+            <Link to="/login" className="text-sm text-blue-600 hover:underline">Log in</Link>
           </div>
         </form>
       </div>
     </section>
-  </>
-);
+  )
+}
 
-export default SignUp;
+export default SignUp

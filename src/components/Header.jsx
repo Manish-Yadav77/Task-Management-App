@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { useKanban } from "../context/KanbanContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useBoard } from "../context/BoardContext";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const { columns } = useKanban();
+  const { boards } = useBoard();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -54,12 +54,12 @@ function Header() {
                   className="absolute top-10 left-0 w-48 bg-white shadow-lg rounded-lg p-2 space-y-1 border z-50"
                   onMouseLeave={() => setShowDropdown(false)}
                 >
-                  {Object.entries(columns).map(([colId, col]) => (
+                  {boards.map((board) => (
                     <li
-                      key={colId}
+                      key={board.id}
                       className="px-3 py-2 hover:bg-yellow-50 rounded-md cursor-pointer text-sm font-medium"
                     >
-                      <Link to={`/singlekanban/${colId}`}>{col.name}</Link>
+                      <Link to={`/board/${board.id}`}>{board.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -88,7 +88,7 @@ function Header() {
           <Link to='/home'>
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Home</li>
           </Link>
-          
+
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">About</li>
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Contact</li>
         </ul>
@@ -129,12 +129,12 @@ function Header() {
               Workspace
               {showDropdown && (
                 <ul className="mt-2 bg-white border rounded-lg shadow p-2 space-y-1 z-50">
-                  {Object.entries(columns).map(([colId, col]) => (
+                  {boards.map((board) => (
                     <li
-                      key={colId}
+                      key={board.id}
                       className="px-3 py-2 hover:bg-yellow-50 rounded-md cursor-pointer text-sm font-medium"
                     >
-                      <Link to={`/singlekanban/${colId}`}>{col.name}</Link>
+                      <Link to={`/board/${board.id}`}>{board.name}</Link>
                     </li>
                   ))}
                 </ul>
