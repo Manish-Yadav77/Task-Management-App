@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
+
+  const url = ['/','/login','/signup'];
+  const hideHome = url.includes(location.pathname);
+  
   return (
     <footer className="bg-orange-100 text-yellow-800 py-6 mt-auto shadow-inner">
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
@@ -14,7 +18,8 @@ function Footer() {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex space-x-6 mt-4 md:mt-0">
+        <div className={`flex space-x-6 mt-4 md:mt-0 ${hideHome? 'hidden' : ''}`}
+        >
           <Link to="/" className="hover:text-yellow-900 transition">
             Home
           </Link>

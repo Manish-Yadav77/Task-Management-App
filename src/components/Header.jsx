@@ -11,6 +11,9 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const url = ['/','/login','/signup'];
+  const hideHome = url.includes(location.pathname);
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -66,7 +69,7 @@ function Header() {
               )}
             </li>
 
-            {location.pathname === "/" && (
+            {!hideHome && (
               <Link
                 to="/home"
                 className="hover:text-yellow-700 cursor-pointer font-medium text-base"
@@ -84,13 +87,18 @@ function Header() {
 
       {/* Right Nav - Desktop */}
       {screenWidth >= 768 && (
-        <ul className="flex gap-6">
+        <ul className={`flex gap-6 ${hideHome? 'hidden' : ''}`}>
           <Link to='/home'>
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Home</li>
           </Link>
 
+          <Link to='/about'>
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">About</li>
+          </Link>
+
+          <Link to='/contact'>
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Contact</li>
+          </Link>
         </ul>
       )}
 

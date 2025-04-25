@@ -8,6 +8,8 @@ import ErrorBoundary from "./pages/ErrorBoundary";
 import LandingPage from "./components/LandingPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Header/>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<BoardsPage />} />
           <Route path="/board/:boardId" element={<BoardDetailPage />} />
         </Routes>
