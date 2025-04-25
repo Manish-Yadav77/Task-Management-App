@@ -4,81 +4,106 @@ import { arrayMove } from "@dnd-kit/sortable";
 
 const BoardContext = createContext();
 
-const getInitialBoards = () => {
-  const stored = localStorage.getItem("kanban_boards");
-  return stored
-    ? JSON.parse(stored)
-    : [
-        {
-          id: uuidv4(),
-          name: "My First Board",
-          columns: [
-            {
-              id: uuidv4(),
-              name: "To Do",
-              tasks: [{ id: uuidv4(), name: "My first task", completed: false }],
-            },
-          ],
-        },
-      ];
-};
-
 export const BoardProvider = ({ children }) => {
-  const [boards, setBoards] = useState(getInitialBoards);
-  const [activeBoardId, setActiveBoardId] = useState(boards[0]?.id || null);
   const token = localStorage.getItem("token");
 
-  // Fetch boards from backend
-  useEffect(() => {
-    const fetchBoards = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/boards", {
-          headers: {
-            Authorization: `Bearer ${token}`,
+  const getInitialBoardData = () => {
+    try {
+      const stored = localStorage.getItem("boardData");
+      return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+      console.error("Failed to parse boardData from localStorage", e);
+      return null;
+    }
+  };
+
+  const initialData = getInitialBoardData();
+  const [boards, setBoards] = useState(
+    initialData?.boards || [
+      {
+        id: uuidv4(),
+        name: "My First Board",
+        columns: [
+          {
+            id: uuidv4(),
+            name: "To Do",
+            tasks: [{ id: uuidv4(), name: "My first task", completed: false }],
           },
-        });
+        ],
+      },
+    ]
+  );
+  const [activeBoardId, setActiveBoardId] = useState(
+    initialData?.activeBoardId || initialData?.boards?.[0]?.id || null
+  );
+  const [hasLoadedBoards, setHasLoadedBoards] = useState(false);
 
-        if (!res.ok) {
-          console.error("Failed to fetch boards");
-          return;
-        }
+  const setBoardData = (data) => {
+    try {
+      localStorage.setItem("boardData", JSON.stringify(data));
+    } catch (error) {
+      console.error("Failed to save to localStorage:", error);
+    }
+  };
 
-        const result = await res.json();
-        if (result?.boards) {
-          setBoards(result.boards);
-          setActiveBoardId(result.boards[0]?.id || null);
-        }
-      } catch (err) {
-        console.error("Error fetching boards:", err);
+  const syncWithBackend = async (boards, activeBoardId) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/saveBoards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ boards, activeBoardId }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log("✅ Synced with backend:", data.message);
+      } else {
+        console.error("❌ Backend Error:", data.error);
       }
-    };
+    } catch (err) {
+      console.error("❌ Network Error:", err);
+    }
+  };
 
-    if (token) fetchBoards();
-  }, [token]);
+  const fetchBoardsFromBackend = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/boards", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  // Save boards to backend
+      const data = await res.json();
+      if (res.ok) {
+        setBoards(data.boards);
+        setActiveBoardId(data.activeBoardId);
+        setHasLoadedBoards(true);
+      } else {
+        console.error("❌ Error loading boards:", data.error);
+      }
+    } catch (err) {
+      console.error("❌ Network Error:", err);
+    }
+  };
+
   useEffect(() => {
-    const saveBoards = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/boards", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ boards }),
-        });
+    fetchBoardsFromBackend();
+  }, []);
 
-        if (!res.ok) console.error("Failed to save boards");
-      } catch (error) {
-        console.error("Save error:", error);
-      }
-    };
-
-    if (boards.length > 0 && token) saveBoards();
-  }, [boards, token]);
+  useEffect(() => {
+    if (!hasLoadedBoards) return;
+    if (boards.length > 0 || activeBoardId) {
+      setBoardData({ boards, activeBoardId }); // localStorage
+      syncWithBackend(boards, activeBoardId); // backend
+    }
+  }, [boards, activeBoardId, hasLoadedBoards]);
 
   const activeBoard = boards.find((b) => b.id === activeBoardId);
+
+  // const activeBoard = boards.find((b) => b.id === activeBoardId);
 
   // ===== BOARD FUNCTIONS =====
   const createBoard = (name) => {

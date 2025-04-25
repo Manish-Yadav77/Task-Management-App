@@ -1,21 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // You can call your backend API here
-    if (email.trim()) {
-      setMessage("Reset link has been sent to your email!");
-      setEmail("");
-    } else {
-      setMessage("Please enter a valid email.");
+    setMessage("");
+  
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/request-reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        navigate("/verify-code", { state: { email } });
+      } else {
+        setMessage(data.message || "User not found.");
+      }
+    } catch (error) {
+      setMessage("Something went wrong. Try again.");
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-blue-300 px-4">

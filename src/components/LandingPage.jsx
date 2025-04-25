@@ -1,6 +1,8 @@
 import React from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LandingPage() {
+  const Navigate = useNavigate();
   return (
     <div className="font-sans bg-gray-50 min-h-screen">
       <section className="bg-white w-full py-16 pt-20">
@@ -11,11 +13,15 @@ function LandingPage() {
               Capture, organize, and <br /> tackle your to-dos from anywhere.
             </h1>
             <p className="text-lg text-gray-500">
-              Escape the clutter and chaos—unleash your productivity with
-              Trello.
+              Escape the clutter and chaos—unleash your productivity with <br />
+              <span className="font-bold text-2xl">Task Manager.</span>
             </p>
             <div className="flex items-center gap-4">
-              <button className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded transition">
+              <button
+              onClick={()=>{
+                Navigate('/signup')
+              }}
+              className="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded transition">
                 Sign up—it's free!
               </button>
               <a

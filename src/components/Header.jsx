@@ -24,6 +24,11 @@ function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear the token or any auth data
+    navigate("/signup"); // Redirect to signup or login
+  };
+
   return (
     <header
       className="bg-gradient-to-r from-yellow-100 to-orange-200 h-20 w-full flex justify-between items-center shadow-md px-4 md:px-10 rounded-b-2xl relative z-50"
@@ -69,14 +74,7 @@ function Header() {
               )}
             </li>
 
-            {!hideHome && (
-              <Link
-                to="/home"
-                className="hover:text-yellow-700 cursor-pointer font-medium text-base"
-              >
-                Home
-              </Link>
-            )}
+            
 
             <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Recent</li>
             <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Templates</li>
@@ -96,30 +94,13 @@ function Header() {
           <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">About</li>
           </Link>
 
-          <Link to='/contact'>
-          <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Contact</li>
+          <Link to='/' onClick={handleLogout}>
+          <li className="hover:text-yellow-700 cursor-pointer font-medium text-base">Logout</li>
           </Link>
         </ul>
       )}
 
-      {/* Action Buttons - Desktop */}
-      {screenWidth >= 640 && (
-        <div className="flex gap-3">
-          <button className="px-4 py-2 rounded-lg bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition hover:cursor-pointer"
-          onClick={()=>{
-            navigate('/login')
-          }}
-          >
-            Login
-          </button>
-          <button className="px-4 py-2 rounded-lg bg-orange-500 text-white font-medium hover:bg-orange-600 transition hover:cursor-pointer"
-          onClick={()=>{
-            navigate('/signup')
-          }}>
-            Sign Up
-          </button>
-        </div>
-      )}
+      
 
       {/* Mobile Menu */}
       {menuOpen && (

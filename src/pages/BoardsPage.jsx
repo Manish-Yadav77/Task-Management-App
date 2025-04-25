@@ -43,6 +43,14 @@ const BoardsPage = () => {
     setEditingBoardName("");
   };
 
+  const isAuthenticated = localStorage.getItem("token");
+
+  if (!isAuthenticated) {
+    return (
+    <div>Loading...</div>
+    )      
+  }
+  
   return (
     <div className="p-6 min-h-screen bg-gradient-to-br from-gray-100 to-blue-100">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">📋 All Boards</h2>
