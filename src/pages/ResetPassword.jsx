@@ -28,7 +28,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/reset-password", {
+      const res = await fetch("https://taskmanagerbackend-ekvk.onrender.com/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

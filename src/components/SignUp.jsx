@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function SignUp() {
 
-  const API = "http://localhost:3000";
+  const API = "https://taskmanagerbackend-ekvk.onrender.com";
   
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

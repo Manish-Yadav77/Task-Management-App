@@ -25,8 +25,8 @@ function Header() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token or any auth data
-    navigate("/signup"); // Redirect to signup or login
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (

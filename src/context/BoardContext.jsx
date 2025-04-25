@@ -48,7 +48,7 @@ export const BoardProvider = ({ children }) => {
 
   const syncWithBackend = async (boards, activeBoardId) => {
     try {
-      const res = await fetch("http://localhost:3000/api/saveBoards", {
+      const res = await fetch("https://taskmanagerbackend-ekvk.onrender.com/api/saveBoards", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const BoardProvider = ({ children }) => {
 
   const fetchBoardsFromBackend = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/boards", {
+      const res = await fetch("https://taskmanagerbackend-ekvk.onrender.com/api/boards", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

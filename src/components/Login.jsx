@@ -6,7 +6,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const Navigate = useNavigate();
 
-  const API = "http://localhost:3000";
+  const API = "https://taskmanagerbackend-ekvk.onrender.com";
 
   const loginUser = async (email, password) => {
     try {
