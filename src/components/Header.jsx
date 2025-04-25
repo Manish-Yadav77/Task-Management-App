@@ -99,9 +99,7 @@ function Header() {
           </Link>
         </ul>
       )}
-
       
-
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-20 left-0 w-full bg-white border-t border-yellow-200 shadow-lg p-4 md:hidden z-40">
@@ -110,7 +108,7 @@ function Header() {
               <Link to="/home">Home</Link>
             </li>
             <li className="font-medium text-base hover:text-yellow-700">About</li>
-            <li className="font-medium text-base hover:text-yellow-700">Contact</li>
+            <Link to='/' onClick={handleLogout} className="font-medium text-base hover:text-yellow-700">Logout</Link>
             <li
               className="font-medium text-base hover:text-yellow-700 relative"
               onMouseEnter={() => setShowDropdown(true)}
