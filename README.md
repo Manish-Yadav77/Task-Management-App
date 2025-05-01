@@ -54,6 +54,8 @@ Technologies used in the project:
 *   React.js
 *   JavaScript(ES6+)
 *   Tailwind css
+*   Context API
+*   MongoDB --->> for storing the user's data
 
 <h2>💖Like my work?</h2>
 
