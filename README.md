@@ -6,7 +6,7 @@
 
 <h2>🚀 Demo</h2>
 
-[https://appsweathers.netlify.app/](https://appsweathers.netlify.app/)
+(https://tasks-managerr.netlify.app)
 
   
   
