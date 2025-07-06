@@ -3,6 +3,7 @@
 <p align="center">
   A modern and intuitive employee task management system built with React.
 </p>
+<p></p>
 
 <p align="center">
   <img alt="GitHub Repo Size" src="https://img.shields.io/github/repo-size/Manish-Yadav77/Task-Management-App" />
