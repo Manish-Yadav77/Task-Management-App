@@ -16,8 +16,7 @@
 
 ## 🚀 Live Demo
 
-> _Coming soon..._  
-> You can deploy via [Netlify](https://netlify.com) or [Vercel](https://vercel.com) and paste the link here.
+> [Netlify](https://tasks-managerr.netlify.app/).
 
 ---
 
