@@ -131,7 +131,7 @@ Contributions are welcome!
 ## ❓ FAQs
 
 **Q: Does it need a backend?**  
-A: No, it runs 100% on the frontend using localStorage.
+A: Yes, it includes both frontend and backend functionality.
 
 **Q: Can I link it to APIs later?**  
 A: Yes, easily pluggable with REST/GraphQL or Firebase.
